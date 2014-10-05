@@ -118,3 +118,87 @@ ul.item-list li.input{
 {
 	cursor: pointer;
 }
+
+#ViewDrafts
+{
+	font-size: .5em;
+	
+}
+
+#ViewDrafts:hover
+{
+	font-size: .5em;
+	cursor: pointer;
+	color: blue;
+}
+
+
+/* Drafts Lightbox */
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  /*background: black url(../../css/images/spinner.gif) no-repeat scroll center center;*/
+  background: black no-repeat scroll center center;
+  z-index: 10002;
+}
+
+#lightbox {
+  position: absolute;
+  background: #fff;
+  height: 150px;
+  width: 400px;
+  border:2px solid;
+  border-radius:25px;
+  -moz-border-radius:25px; /* Firefox 3.6 and earlier */
+  padding: 10px;
+  z-index: 10003;
+  box-shadow: 10px 10px 5px #888888;
+  -webkit-box-shadow: 10px 10px 5px #888888; /* Safari */
+  color: black;
+}
+
+.Position3Close
+{
+	color: gray;
+	font-weight: bold;
+	font-size: 20px;
+	cursor: pointer;
+	text-align: right; 
+	width: 100%; 
+	padding-right: 20px;
+}
+.Position3Close:hover
+{
+	color: silver;
+}
+
+.draftRevert, .draftView
+{
+	font-size: .7em;
+	color: blue;
+}
+
+.draftRevert:hover, .draftView:hover, #backToDrafts:hover, .closeLightBox:hover
+{
+	cursor: pointer;
+	color: rgb(133, 128, 128);
+}
+
+#backToDrafts
+{
+	text-align: right;
+	padding: 10px 20px 10px 0px;
+	color: blue;	
+}
+
+.closeLightBox
+{
+	text-align: right;
+	font-weight: bold;
+	padding-right: 8px;
+	font-size: 18px;
+}
+

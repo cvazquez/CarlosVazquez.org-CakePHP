@@ -5,40 +5,28 @@
 $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js', array("inline"=>false));
 $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js', array("inline"=>false));
 
-$this->Html->script('tinymce/tinymce.min', array("inline"=>false));
+$this->Html->script('tiny_mce3.5.11/tiny_mce', array("inline"=>false));
 $this->Html->script('posts/edit', array("inline"=>false));
 $this->Html->script('multiautocomplete/multiautocomplete', array("inline"=>false));
 
-echo $this->Html->css('posts/edit');
+echo $this->Html->css('posts/edit', array("inline"=>false));
 
-
-$this->Html->scriptStart(array('inline' => false));
 ?>
 
-tinymce.init({
-	selector: "textarea",
-	plugins: "code,link,paste",
-	paste_retain_style_properties: "color font-size"
-});
+
+
 
 <?php
-$this->Html->scriptEnd();
-
 
 echo $this->Form->create('Post');
+
+
 echo $this->Form->input('title');
 
 // Allow an empty date if not ready to publish
 echo $this->Form->input('publishAt', array('allowEmpty' => true, 'default' => 0, 'empty' => true));
 
-/* Multi select */
-//echo $this->Form->input('Category');
 
-//echo "<pre>";
-//print_r($categories);
-//print_r($categoriesSelected);
-
-//echo "</pre>";
 ?>
 
 
@@ -47,11 +35,6 @@ Categories<br>
 <ul class="item-list categories">
 <?php
 
-/*
-echo "<pre>";
-print_r($categoriesSelected);
-echo "</pre>";
-*/
 
 // Loop through each category
 foreach ($categories AS $categoryId=>$categoryName)
@@ -84,30 +67,34 @@ foreach ($categories AS $categoryId=>$categoryName)
 
 
 <?php
-	/*
-	 echo '<p><select name="categoryIds" id="categoryIds">';
-	foreach ($categories AS $categoryId=>$categoryName)
-	{
-		if (array_key_exists($categoryId,$categoriesSelected))
-		{
-			$selected = "selected";
-		}
-		else
-		{
-			$selected = "";
-		}
-		echo "<option value='$categoryId' $selected>$categoryName</option>";
-	}
-	*/
-?>
 
-<!-- </select>
-</p>
- -->
+if ( count($drafts) > 0 && count_chars($drafts['EntryDrafts']['content'] != count_chars($postBody)))
+{
+	
+	// echo "CONTENT:" . $drafts['EntryDrafts']['content'] . "<br>";
+	//echo "BODY: " . $postBody . "<br>";
+	
+	//echo count_chars(trim(chop($drafts['EntryDrafts']['content'])),3);
+	//echo "<br>";
+	//echo htmlentities(trim($drafts['EntryDrafts']['content']));
+	
+	
+	//var_dump(trim(chop($drafts['EntryDrafts']['content'])));
+	//echo "<br>";
+	//echo count_chars(trim(chop($postBody)),3);
+	//echo htmlentities($postBody);
+	
+	//var_dump(trim(chop($postBody)));
+	
+	//echo "Draft and current content are not equal: View Draft (put thin in an overlay, then ask whether to use. give a history option too)";
+	//exit;
+}
 
-<?php
 
-echo $this->Form->input('body', array('rows' => '20'));
+echo $this->Form->input('body', array(	'rows' => '20',
+										'label' => 'Body <span id="ViewDrafts">(View Drafts)</span><span id="SaveBodyDraftStatus"></span>',
+										));
+
 echo $this->Form->input('id', array('type' => 'hidden'));
 echo $this->Form->end('Save Post');
 

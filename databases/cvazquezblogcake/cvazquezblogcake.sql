@@ -73,4 +73,19 @@ GRANT SELECT ON cvazquezblogcake.admin_settings TO 'cakeUser'@'localhost';
 GRANT SELECT ON cvazquezblog.adminsettings TO blog_view_user@localhost;
 
 
+
+DROP VIEW IF EXISTS cvazquezblogcake.entry_drafts;
+CREATE DEFINER = `blog_view_user`@`localhost`
+    SQL SECURITY DEFINER
+    VIEW cvazquezblogcake.entry_drafts (`id`, entry_id, content, created)
+    AS 
+	 SELECT id, entryId, content, createdAt
+	 FROM cvazquezblog.entrydrafts
+    WITH  CHECK OPTION;
+
+GRANT SELECT, INSERT, UPDATE ON cvazquezblogcake.entry_drafts TO 'cakeUser'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON cvazquezblog.entrydrafts TO blog_view_user@localhost;
+
+
+
 show grants for 'cakeUser'@'localhost';

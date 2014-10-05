@@ -3,6 +3,8 @@ class PostsController extends AppController {
 	
 	// Include JQuery library	
 	//public $helpers = array('Html' => 'Form', 'Js' => array('Jquery'));
+	
+	public $components = array('RequestHandler');
  
 	
 	public function isAuthorized($user) {
@@ -59,7 +61,8 @@ class PostsController extends AppController {
         	throw new NotFoundException(__('Invalid post'));
     	}
     	
-    	
+
+    	/* Form is being submitted. Save data */
     	if ($this->request->is(array('post', 'put'))) {
     		
 	        $this->Post->id = $id;
@@ -86,6 +89,23 @@ class PostsController extends AppController {
     	}
     	else 
     	{
+    		/* Check if a draft exists */
+    		$this->loadModel('EntryDrafts');
+    		$draft = array();
+    		$draft['conditions'] = array('entry_id' => $id);
+    		$draft['order'] = 'id desc';
+    		$draft['limit'] = 1;
+    		
+    		$this->set('drafts', $this->EntryDrafts->find('first', $draft));
+    		
+    		/* Assign content to posts */
+
+    		//var_dump($post);
+    		
+    		
+    		$this->set('postBody', $post["Post"]["body"]);
+    		//exit;
+    		
     		// Fetch all categories
     		$this->loadModel('Category');
     		$this->set('categories', $this->Category->find('list', array(
@@ -159,6 +179,104 @@ class PostsController extends AppController {
     	//$this->CategoriesPosts->create($categoryData);
     	*/
     	
+	}
+	
+	public function ajaxSaveDraft()
+	{
+		$message = "";
+		
+		if ($this->request->is('post') && isset($this->request->data['entry_id']) && isset($this->request->data['content']))
+		{			
+			/* Save body to a temporary table */
+			
+			$this->loadModel('EntryDrafts');
+			
+			$this->EntryDrafts->create();
+			$saveStatus = $this->EntryDrafts->save($this->request->data);
+			
+			if ($saveStatus)
+			{
+				$message = 'success';
+			}
+			else			
+			{
+				$message = print_r($saveStatus, true);
+			}
+			
+			
+			
+		}
+		else 
+		{
+			if (!isset($this->request->data['entry_id']))
+			{
+				$message = 'Post ID is missing';
+			}
+			elseif (is_nan($this->request->data['entry_id']))
+			{
+				$message = 'Post ID is not a number';
+			}
+				
+			if (!isset($this->request->data['content'])) {
+				$message = 'Post BODY is missing';
+			}
+			
+			
+		}
+		
+		$this->set(array(
+				'message' => $message,
+				'_serialize' => array('message')
+		));
+			
+		
+		
+	}
+	
+	public function getdrafts()
+	{
+		$message = "No drafts found.";
+		
+		if ($this->request->is('post') && isset($this->request->data['id']))
+		{
+			$this->loadModel('EntryDrafts');
+			$draftParams = array();
+			$draftParams['fields'] = array('id', 'content', 'created');
+			$draftParams['conditions'] = array('entry_id' => $this->request->data['id']);
+			$draftParams['order'] = 'id desc';
+			$draftParams['group'] = 'DATE_FORMAT(created, "%Y-%m-%d %k:%i")';
+			//$draftParams['limit'] = 1;
+			
+			$message = $this->EntryDrafts->find('all', $draftParams);		
+			
+		}
+		
+		$this->set(array(
+				'message' => $message,
+				'_serialize' => array('message')
+		));
+	}
+	
+	public function getdraft()
+	{
+		$message = "No draft found.";
+	
+		if ($this->request->is('post') && isset($this->request->data['id']))
+		{
+			$this->loadModel('EntryDrafts');
+			$draftParams = array();
+			$draftParams['fields'] = array('content');
+			$draftParams['conditions'] = array('id' => $this->request->data['id']);
+			//$draftParams['limit'] = 1;
+				
+			$message = $this->EntryDrafts->find('all', $draftParams);
+				
+		}
+	
+		$this->set(array(
+				'message' => $message,
+				'_serialize' => array('message')
+		));
 	}
 	
 	public function delete($id) 
