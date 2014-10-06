@@ -18,25 +18,9 @@ $(function(){
   	  	save_onsavecallback: function() { ajaxSave();}
 	});
 	
-	/*
-	tinymce.init({
-		mode : "textareas",
-	    theme : "advanced",
-		selector: "textarea",
-		plugins: "save,code,link,paste",
-		paste_retain_style_properties: "color font-size"
-	});
-	*/
-	
-	
+
 });
 
-
-/* http://www.tinymce.com/wiki.php/plugin:save 
-function AjaxSaveForm()
-{
-	
-}*/
 
 function ajaxSave() {
     var post = {
@@ -117,25 +101,22 @@ function getDrafts()
 	  		success:	function( data ) 
 	  			{	  				
 	  				// List Date/Time and Length of each post and initally hide the content with a click event displaying it
-	  				//console.log(data.message);
-	  				//console.log(data.message.length);
-	  			
-	  			if(data.message.length > 3)
-	  			{
-	  				newHeight = (data.message.length * 50) + 68;
-	  				
-	  				// Prevent the lightbox from going past the screen
-	  				if (newHeight > maxHeight) newHeight = maxHeight;
-	  				
-	  				newHeight = newHeight + "px";
-	  				
-	  				// Set the new height of the lightbox
-	  				document.getElementById("lightbox").style.height = newHeight;
-	  				
-	  			}
-	  			
-	  			// Function to reposition the lightbox based on the new heights
-	  			positionLightboxImage();
+		  			if(data.message.length > 3)
+		  			{
+		  				newHeight = (data.message.length * 50) + 68;
+		  				
+		  				// Prevent the lightbox from going past the screen
+		  				if (newHeight > maxHeight) newHeight = maxHeight;
+		  				
+		  				newHeight = newHeight + "px";
+		  				
+		  				// Set the new height of the lightbox
+		  				document.getElementById("lightbox").style.height = newHeight;
+		  				
+		  			}
+		  			
+		  			// Function to reposition the lightbox based on the new heights
+		  			positionLightboxImage();
 	  			
 	  				
 	  				// Loop through all the draft entries retrieved from our AJAX repsonse
@@ -157,19 +138,19 @@ function getDrafts()
 	  				// Close our list of drafts
 	  				draftsDisplay += "</ul>";
 	  				
-	  			// Use the close button and our list of drafts and set it as the HTML of the lightbox	  			
-	  			$('#lightbox').html(closeDrafts + draftsDisplay);
-	  			
-	  			
-	  			// When a link to view the draft is clicked, call the getDraft function to retrieve that version of the post 
-	  			 $(".draftView").click(function(){
-	  				// The draft id is contained in the parent <li> of each draft listed 
-	  				var $draftId = $(this).parent().attr("draftId");
-	  				
-	  				// Call function that uses AJAX to retrieve this draft id from the server's database
-	  				getDraft($draftId);
-	  		    	
-	  			 });
+		  			// Use the close button and our list of drafts and set it as the HTML of the lightbox	  			
+		  			$('#lightbox').html(closeDrafts + draftsDisplay);
+		  			
+		  			
+		  			// When a link to view the draft is clicked, call the getDraft function to retrieve that version of the post 
+		  			 $(".draftView").click(function(){
+		  				// The draft id is contained in the parent <li> of each draft listed 
+		  				var $draftId = $(this).parent().attr("draftId");
+		  				
+		  				// Call function that uses AJAX to retrieve this draft id from the server's database
+		  				getDraft($draftId);
+		  		    	
+		  			 });
 	  				
 	  			},
 	  		complete: function() 

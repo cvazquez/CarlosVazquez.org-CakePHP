@@ -1,11 +1,7 @@
 <?php
 class PostsController extends AppController {
 	
-	// Include JQuery library	
-	//public $helpers = array('Html' => 'Form', 'Js' => array('Jquery'));
-	
 	public $components = array('RequestHandler');
- 
 	
 	public function isAuthorized($user) {
 		// All registered users can add posts
@@ -66,26 +62,19 @@ class PostsController extends AppController {
     	if ($this->request->is(array('post', 'put'))) {
     		
 	        $this->Post->id = $id;
-	        
 	        $saveStatus = $this->Post->save($this->request->data);
 	        
-	        
-        	if ($saveStatus ) {
-        		
-        		
+        	if ($saveStatus ) 
+        	{
         		// Use the Cake PHP database config values to create a connection to MySQL
         		$this->loadModel('CategoriesPosts');
         		$this->CategoriesPosts->saveCategories($this->request->data["Category"], $this->Post->id);
         		
-        		
 	            $this->Session->setFlash(__('Your post has been updated.'));
             	return $this->redirect(array('action' => 'index'));
-            	
-            	
-            	
         	}
+
         	$this->Session->setFlash(__('Unable to update your post.'));
-        	
     	}
     	else 
     	{
@@ -99,12 +88,7 @@ class PostsController extends AppController {
     		$this->set('drafts', $this->EntryDrafts->find('first', $draft));
     		
     		/* Assign content to posts */
-
-    		//var_dump($post);
-    		
-    		
     		$this->set('postBody', $post["Post"]["body"]);
-    		//exit;
     		
     		// Fetch all categories
     		$this->loadModel('Category');
@@ -188,7 +172,6 @@ class PostsController extends AppController {
 		if ($this->request->is('post') && isset($this->request->data['entry_id']) && isset($this->request->data['content']))
 		{			
 			/* Save body to a temporary table */
-			
 			$this->loadModel('EntryDrafts');
 			
 			$this->EntryDrafts->create();
@@ -245,10 +228,8 @@ class PostsController extends AppController {
 			$draftParams['conditions'] = array('entry_id' => $this->request->data['id']);
 			$draftParams['order'] = 'id desc';
 			$draftParams['group'] = 'DATE_FORMAT(created, "%Y-%m-%d %k:%i")';
-			//$draftParams['limit'] = 1;
 			
 			$message = $this->EntryDrafts->find('all', $draftParams);		
-			
 		}
 		
 		$this->set(array(
