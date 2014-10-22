@@ -4,6 +4,7 @@ CarlosVazquez.org-CakePHP
 Description
 -----------
 This is a version of my blog written using CakePHP, located on www.carlosvazquez.org
+
 See http://www.carlosvazquez.org/blog/category/Portfolio for screenshots of the admin area (coming soon)
 
 I started out by using the blog admin code examples from the cakephp blog tutorial and the access control list examples. I have added the following features to the admin area so far:

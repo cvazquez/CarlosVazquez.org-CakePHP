@@ -266,12 +266,44 @@ class PostsController extends AppController {
     	    throw new MethodNotAllowedException();
 	    }
 
-    		if ($this->Post->delete($id)) {
-        		$this->Session->setFlash(
-            	__('The post with id: %s has been deleted.', h($id))
-    	    );
-	        return $this->redirect(array('action' => 'index'));
-    	}
+   
+	    $data = array('id' => $id, 'deletedAt' => date('Y-m-d H:i:s'));
+	    $saveStatus = $this->Post->save($data);
+	     
+	    if ($saveStatus )
+	    {
+	    	$this->Session->setFlash(__('Your post has been deactivated.'));
+	    }
+	    else
+	    {
+	    	$this->Session->setFlash(__('There was an error deactivating your post.'));	    	
+	    }
+    
+	    return $this->redirect(array('action' => 'index'));
+    	
+	}
+	
+	
+	public function reactivate($id)
+	{
+		if ($this->request->is('get')) {
+			throw new MethodNotAllowedException();
+		}
+	
+		$data = array('id' => $id, 'deletedAt' => NULL);
+		$saveStatus = $this->Post->save($data);
+	
+		if ($saveStatus )
+		{
+			$this->Session->setFlash(__('Your post has been reactivated.'));
+		}
+		else
+		{
+			$this->Session->setFlash(__('There was an error reactivating your post.'));
+		}
+	 
+		return $this->redirect(array('action' => 'index'));		    
+	   
 	}
 }
 ?>

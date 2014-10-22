@@ -87,6 +87,12 @@ ul.item-list li.input{
 /* END Categories AutoComplete */
 
 
+/* Tiny MCE Editor */
+#PostBody_tbl
+{
+	width: 100%!important;
+}
+
 
 /* Drafts Lightbox */
 #ViewDrafts
