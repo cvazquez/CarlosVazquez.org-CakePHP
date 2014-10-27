@@ -8,11 +8,14 @@ $this->Html->script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquer
 $this->Html->script('tiny_mce3.5.11/tiny_mce', array("inline"=>false));
 $this->Html->script('posts/edit', array("inline"=>false));
 $this->Html->script('multiautocomplete/multiautocomplete', array("inline"=>false));
+$this->Html->script('syntaxhighlighter_3.0.83/shCore', array("inline"=>false));
+$this->Html->script('syntaxhighlighter_3.0.83/shBrushJScript', array("inline"=>false));
 
 echo $this->Html->css('posts/edit', array("inline"=>false));
+echo $this->Html->css('syntaxhighlighter_3.0.83/shCore', array("inline"=>false));
+echo $this->Html->css('syntaxhighlighter_3.0.83/shThemeDefault', array("inline"=>false));
+
 ?>
-
-
 
 
 <?php
@@ -60,8 +63,26 @@ Categories<br>
 
 <?php
 echo $this->Form->input('body', array(	'rows' => '20',
-										'label' => 'Body <span id="ViewDrafts">(View Drafts)</span><span id="SaveBodyDraftStatus"></span>',
+										'label' => 'Body <span id="ViewDrafts">(View Drafts)</span><span id="SaveBodyDraftStatus">Draft Last Saved At:<span id="DraftSaveTime"></span></span>',
 										));
+?>
+
+<div id="SyntaxHighlighterInstructions">
+To use Syntax Highlighter, surround code with a pre tag with the brush: js class<br>
+&lt;pre class="brush: js"&gt;<br>
+function foo()<br>
+{<br>
+}<br>
+&lt;pre&gt;
+</div>
+
+
+<?php
 echo $this->Form->input('id', array('type' => 'hidden'));
 echo $this->Form->end('Save Post');
 ?>
+
+<!-- Finally, to actually run the highlighter, you need to include this JS on your page -->
+<script type="text/javascript">
+     SyntaxHighlighter.all()
+</script>

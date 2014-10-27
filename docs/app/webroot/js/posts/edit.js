@@ -37,7 +37,13 @@ function ajaxSave() {
    		dataType:	"json",
    		type	:	"post",
    		success	:	function(data){
-   						$("#SaveBodyDraftStatus").html("Saved Draft");
+   						
+			   			var date = new Date();
+			   			var dateString = date.toDateString();
+			   			var timeString = date.toLocaleTimeString();   						
+   						
+   						$("#SaveBodyDraftStatus").show('pulsate');
+   						document.getElementById("DraftSaveTime").innerHTML = dateString + ' ' + timeString;
    	  }});    
     
 }

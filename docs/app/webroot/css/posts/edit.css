@@ -94,6 +94,7 @@ ul.item-list li.input{
 }
 
 
+
 /* Drafts Lightbox */
 #ViewDrafts
 {
@@ -163,3 +164,26 @@ ul.item-list li.input{
 }
 
 /* END Drafts Lightbox */
+
+
+#SaveBodyDraftStatus
+{
+	color: brown;
+	font-size: .85em;
+	margin-left: 15px;
+	display: none;
+	float: right;
+}
+#DraftSaveTime
+{
+	color: brown;	
+	margin-left: 5px;
+}
+
+#SyntaxHighlighterInstructions
+{
+	border: 1px solid black;
+	width: 50%;
+	font-size: 0.75em;
+	padding: 15px;
+}
